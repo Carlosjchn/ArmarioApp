@@ -1,7 +1,7 @@
 package registrouser;
 
 import java.util.Scanner;
-import recursos.Recursos.*;
+import static recursos.Recursos.*;
 
 public class RegistroUser {
     

@@ -1,7 +1,6 @@
 package registroropa;
 
 import static recursos.Recursos.*;
-
 import java.util.Scanner;
 
 public class RegistroRopa {
@@ -31,9 +30,9 @@ public class RegistroRopa {
         }
 
         for (int i = 0; i < ropa.length; i++) {
+            System.out.println("");
             for (int j = 0; j < ropa[0].length; j++) {
-                System.out.println(ropa[i][j]);
-                ;
+                System.out.print(ropa[i][j]+" ");
             }
         }
         sc.close();
