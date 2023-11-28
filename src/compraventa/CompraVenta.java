@@ -1,5 +1,6 @@
 package compraventa;
 
+import java.util.Random;
 import java.util.Scanner;
 import static recursos.Recursos.*;
 
@@ -18,7 +19,7 @@ public class CompraVenta {
     // ======================================================
 
     // ================= FUNCION +1 FILA ARRAY ====================
-    public static String[][] arrayString2D(String[][] array, String dato[]) {
+    public static String[][] sumarPrenda(String[][] array, String dato[]) {
         if (array[0][0] == null) {
             for (int k = 0; k < dato.length; k++) {
                 array[0][k] = dato[k];
@@ -66,7 +67,7 @@ public class CompraVenta {
     }
     // ======================================================================
 
-    // ---------------- FUNCIONES PARA OPCIONES APLICACIÓN. -----------------
+    // ---------------- FUNCIONES PARA opcion[]ES APLICACIÓN. -----------------
 
     // ================ FUNCION IMPRIMIR MENU =============
     public static String menu(Scanner sc) {
@@ -77,15 +78,19 @@ public class CompraVenta {
     // =====================================================
 
     // ========== FUNCION IMPRIMIR ARRAYS ROPA =============
-    public static void verRopa(String RopaUser[][]) {
-        if (RopaUser[0][0] == null) {
+    public static void verRopa(String ropaUser[][],int[] saldo) {
+        if (ropaUser[0][0] == null) {
             System.out.println("No tienes ropa registrada.");
         } else {
-            System.out.println("Tu ropa:");
-            for (int i = 0; i < RopaUser.length; i++) {
+            if (ropaUser[0].length == 4) {
+                System.out.println("Tu ropa: \n  Prenda \t Color \t Talla \t Precio(euros) \t Tú saldo:"+saldo[0]+" euros");
+            } else {
+                System.out.println("Tu ropa: \n  Prenda \t Color \t Talla");
+            }
+            for (int i = 0; i < ropaUser.length; i++) {
                 System.out.print("\n" + (i + 1) + " ");
-                for (int j = 0; j < RopaUser[0].length; j++) {
-                    System.out.print(RopaUser[i][j] + " ");
+                for (int j = 0; j < ropaUser[0].length; j++) {
+                    System.out.print(ropaUser[i][j] + "\t ");
                 }
             }
             System.out.println("");
@@ -94,9 +99,9 @@ public class CompraVenta {
     // =====================================================
 
     // ============== FUNCIONES VENTA ===================
-    public static String[] reconPrenda(String prendaVender[], String ropaUser[][], Scanner sc) {
+    public static String[] reconPrenda(String prendaVender[], String ropaUser[][], Scanner sc,int[] saldo) {
         System.out.println("¿Que articulo quieres elegir?");
-        verRopa(ropaUser);
+        verRopa(ropaUser,saldo);
         int articulo = sc.nextInt();
         if (articulo <= ropaUser.length) {
             for (int i = 0; i < prendaVender.length; i++) {
@@ -110,89 +115,153 @@ public class CompraVenta {
         System.out.println("¿Que precio quieres ponerle a tu " + prendaVender[0] + " "
                 + prendaVender[1] + "?");
         String precio = sc.next();
-        ventaUser = arrayString2D(ventaUser, prendaVender);
+        ventaUser = sumarPrenda(ventaUser, prendaVender);
         ventaUser[ventaUser.length - 1][ventaUser[0].length - 1] = precio;
         return ventaUser;
     }
-  /*public static void Venta(Scanner sc,String prendaVender[], String ropaUser[][], String ropaVenta[][], String opcion){
-        boolean vender = false;
-        while (vender == false) {
-            limpiarPantalla();
-            reconPrenda(prendaVender, ropaUser, sc);
-            ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
-            ropaUser = restarPrenda(ropaUser, prendaVender);
-            System.out.println("¿Quieres seguir vendiendo? (Si/No)");
-            opcion = sc.next();
-            if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
-                vender = false;
-            } else {
-                vender = true;
-            }
-        }
-    }*/
+    /*
+     * public static void Venta(Scanner sc,String prendaVender[], String
+     * ropaUser[][], String ropaVenta[][], String opcion){
+     * boolean vender = false;
+     * while (vender == false) {
+     * limpiarPantalla();
+     * reconPrenda(prendaVender, ropaUser, sc);
+     * ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
+     * ropaUser = restarPrenda(ropaUser, prendaVender);
+     * System.out.println("¿Quieres seguir vendiendo? (Si/No)");
+     * opcion = sc.next();
+     * if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
+     * vender = false;
+     * } else {
+     * vender = true;
+     * }
+     * }
+     * }
+     */
     // ====================================================
 
     // =============== FUNCIONES COMPRA =====================
-    public static void menuCompra(Scanner sc, String[] usuarios, String[][] ropaJuan, String[][] ropaManuel, String[][] ropaAlberto) {
-        System.out.println("Elige un usuario para ver su Armario:\n");
-                    for (int i = 0; i < usuarios.length; i++) {
-                        System.err.print("\t" + (i+1) + ". " + usuarios[i]);
-                    }
-                    String opcion=sc.next();
-                    switch (opcion){
-                        case "1","Juan","juan":
-                        limpiarPantalla();
-                        verRopa(ropaJuan);
-                        break;
-                        case "2","Manuel","manuel":
-                        limpiarPantalla();
-                        verRopa(ropaManuel);
-                        break;
-                        case "3","Alberto","alberto":
-                        limpiarPantalla();
-                        verRopa(ropaAlberto);
-                        break;
-                    }
-        
+    public static String[][] menuCompra(Scanner sc, String[] usuarios, String prendaVender[], String[][] ropaJuan,
+            String[][] ropaManuel,
+            String[][] ropaAlberto, int []saldo, String[] opcion) {
+        boolean done = false;
+        while (done == false) {
+            limpiarPantalla();
+            System.out.println("Elige un usuario para ver su Armario:\n");
+            for (int i = 0; i < usuarios.length; i++) {
+                System.err.print("\t " + (i + 1) + ". " + usuarios[i]);
+            }
+            opcion[0] = sc.next();
+            switch (opcion[0]) {
+                case "1", "Juan", "juan":
+                    done = true;
+                    limpiarPantalla();
+                    reconPrenda(prendaVender, ropaJuan, sc, saldo);
+                    return ropaJuan;
+                case "2", "Manuel", "manuel":
+                    done = true;
+                    limpiarPantalla();
+                    reconPrenda(prendaVender, ropaManuel, sc, saldo);
+                    return ropaManuel;
+                case "3", "Alberto", "alberto":
+                    done = true;
+                    limpiarPantalla();
+                    reconPrenda(prendaVender, ropaAlberto, sc, saldo);
+                    return ropaAlberto;
+                default:
+                    System.out.println("Elige una opcion.");
+                    sc.next();
+            }
+        }
+        return ropaJuan;
     }
-    
 
-    //                          PROGRAMA MAIN
+    public static int precio (String ropaCompra[][],String prendaVender[]){
+        int precio=0;
+        String num="";
+        for(int i=0;i<ropaCompra.length;i++){
+        if(prendaVender[0]==ropaCompra[i][0]){
+        num=ropaCompra[i][3];
+        }
+        }
+        for(int i=0;i<num.length();i++){
+            if(num.charAt(i)=='0'||num.charAt(i)=='1'||num.charAt(i)=='2'||num.charAt(i)=='3'||num.charAt(i)=='4'||num.charAt(i)=='5'||num.charAt(i)=='6'||num.charAt(i)=='7'||num.charAt(i)=='8'||num.charAt(i)=='9'){   
+                if(num.charAt(i)=='0'){
+                    precio= (precio) + (0);
+                }
+                precio= (precio) + ((num.charAt(i)-'0'));
+            }
+            }
+        return precio;
+    }
+
+    public static String[][] comprar(String prendaVender[],String ropaUser[][], String ropaCompra[][],int saldo[],int precio){
+        saldo[0]=saldo[0]-precio;
+        if(saldo[0]>=0){
+        ropaCompra=restarPrenda(ropaCompra, prendaVender);
+        return ropaCompra;
+        }else{
+        saldo[0]=saldo[0] + precio;
+        return ropaCompra;
+        }
+    }
+
+    // ======= Generar precios random ========
+    public static int cami(Random r) {
+        int cami = r.nextInt(25 - 10) + 10;
+        return cami;
+    }
+
+    public static int suda(Random r) {
+        int suda = r.nextInt(40 - 20) + 20;
+        return suda;
+    }
+
+    public static int pant(Random r) {
+        int pant = r.nextInt(40 - 25) + 25;
+        return pant;
+    }
+    // ========================================
+
+    // PROGRAMA MAIN
     public static void main(String[] args) {
         /*
          * Necesito que Login==true, RopaUser[][]
          * Funcion para ver la ropa del user. HECHO
          * Funcion para poner RopaUser a la venta con precio. HECHO
          * Funcion para ver RopaUser a la venta. HECHO
-         * Funcion para ver ropa que puedes comprar.
+         * Funcion para ver ropa que puedes comprar. HECHO
          * Funcion para comprar y que se añada a RopaUser.
          * Funcion para mensajes con vendedor/comprador.
          * Funcion para favoritos/carrito compra.
          */
-
+        Random r = new Random();
+        //defino el saldo como un array para poder actualizarlo en las funcione usando la misma memoria.
+        int saldo[]={200};
         Scanner sc = new Scanner(System.in);
-        String ropaUser[][] = { { "Sudadera", "Roja", "L" },
+        String ropaUser[][] = { { "Sudadera", "Roja", "M" },
                 { "Camiseta", "Blanca", "M" },
                 { "Camiseta", "Negra", "L" },
-                { "Pantalon", "Cargo Negro", "L" },
+                { "Pant Cargo", "Negro", "L" },
                 { "Sudadera", "Negra", "L" } };
 
-        String[] usuarios={"Juan", "Manuel", "Alberto"};
-        String ropaJuan[][] = { { "Pantalon", "Chino", "M" },
-                { "Sudadera", "Negra", "L" },
-                { "Camiseta", "Blanca", "L" },
-                { "Sudadera", "Blanca", "M" },
-                { "Pantalon", "Cargo Verde", "L" }};
+        String[] usuarios = { "Juan", "Manuel", "Alberto" };
+        String ropaJuan[][] = { { "Pant  Chino", "Beige", "M", pant(r) + "" },
+                { "Sudadera", "Negra", "L", suda(r) + "" },
+                { "Camiseta", "Blanca", "L", cami(r) + "" },
+                { "Sudadera", "Blanca", "M", suda(r) + "" },
+                { "Pant Cargo", "Verde", "L", pant(r) + "" } };
 
-        String ropaManuel[][] = { { "Sudadera", "Negra", "L" },
-                { "Camiseta", "Blanca", "M" },
-                { "Camiseta", "Azul", "S" },
-                { "Pantalon", "Vaquero", "L" }};
+        String ropaManuel[][] = { { "Sudadera", "Negra", "S", suda(r) + "" },
+                { "Camiseta", "Blanca", "M", cami(r) + "" },
+                { "Camiseta", "Azul", "S", cami(r) + "" },
+                { "Pant Vaquero", "Azul", "L", pant(r) + "" } };
 
-        String ropaAlberto[][] = { { "Camisa", "Blanca", "L" },
-                { "Camiseta", "Azul", "L" },
-                { "Pantalon", "Vaquero", "XL" },
-                { "Sudadera", "Azul", "XL" },};
+        String ropaAlberto[][] = { { "Camisa", "Blanca", "L", cami(r) + "" },
+                { "Camiseta", "Azul", "L", cami(r) + "" },
+                { "Pant Vaquero", "Negro", "XL", pant(r) + "" },
+                { "Sudadera", "Azul", "XL", suda(r) + "" } };
+
         String ropaVenta[][] = new String[1][4];
         String prendaVender[] = new String[3];
         boolean salir = false;
@@ -203,7 +272,7 @@ public class CompraVenta {
             switch (menu(sc)) {
                 case "1", "Armario", "armario":
                     limpiarPantalla();
-                    verRopa(ropaUser);
+                    verRopa(ropaUser,saldo);
                     sc.nextLine();
                     break;
                 case "2", "Vender", "vender":
@@ -215,7 +284,7 @@ public class CompraVenta {
                             boolean vender = false;
                             while (vender == false) {
                                 limpiarPantalla();
-                                reconPrenda(prendaVender, ropaUser, sc);
+                                reconPrenda(prendaVender, ropaUser, sc, saldo);
                                 ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
                                 ropaUser = restarPrenda(ropaUser, prendaVender);
                                 System.out.println("¿Quieres seguir vendiendo? (Si/No)");
@@ -229,22 +298,35 @@ public class CompraVenta {
                             break;
                         case "2":
                             limpiarPantalla();
-                            verRopa(ropaVenta);
+                            verRopa(ropaVenta, saldo);
                             System.out.println("\n¿Quieres retirar alguna prenda? (Si/No)");
-                            opcion=sc.next();
-                            if(opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")){
+                            opcion = sc.next();
+                            if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
                                 limpiarPantalla();
-                                reconPrenda(prendaVender, ropaVenta, sc);
+                                reconPrenda(prendaVender, ropaVenta, sc, saldo);
                                 ropaVenta = restarPrenda(ropaVenta, prendaVender);
-                                ropaUser = arrayString2D(ropaUser, prendaVender);
+                                ropaUser = sumarPrenda(ropaUser, prendaVender);
                             }
                             break;
                     }
                     break;
                 case "3", "Comprar", "comprar":
                     limpiarPantalla();
-                    menuCompra(sc, usuarios, ropaJuan, ropaManuel, ropaAlberto);
-                    sc.next();
+                    String opcion1[]={""};
+                    String [][] ropaCompra=menuCompra(sc, usuarios, prendaVender, ropaJuan, ropaManuel, ropaAlberto, saldo,opcion1);
+                    int precio = precio(ropaCompra, prendaVender);
+                    switch(opcion1[0]){
+                        case "1","Juan","juan":
+                        ropaJuan=comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                        break;
+                        case "2","Manuel","manuel":
+                        ropaManuel=comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                        break;
+                        case "3","Alberto","alberto":
+                        ropaAlberto=comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                        break;
+                    }
+                    ropaUser=sumarPrenda(ropaUser, prendaVender);
                     break;
                 case "4", "Salir", "salir":
                     limpiarPantalla();
