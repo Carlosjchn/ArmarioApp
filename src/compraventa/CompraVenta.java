@@ -85,7 +85,7 @@ public class CompraVenta {
             if (ropaUser[0].length == 4) {
                 System.out.println("Tu ropa: \n  Prenda \t Color \t Talla \t Precio(euros) \t Tú saldo:"+saldo[0]+" euros");
             } else {
-                System.out.println("Tu ropa: \n  Prenda \t Color \t Talla");
+                System.out.println("Tu ropa: \n  Prenda \t Color \t Talla \t Tú saldo:"+saldo[0]+" euros");
             }
             for (int i = 0; i < ropaUser.length; i++) {
                 System.out.print("\n" + (i + 1) + " ");
