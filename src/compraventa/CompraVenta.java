@@ -113,6 +113,8 @@ public class CompraVenta {
                 prendaVender[i] = ropaUser[articulo - 1][i];
             }
         }
+        }else{
+            sc.next();
         }
         }while(num==false);
         return prendaVender;
