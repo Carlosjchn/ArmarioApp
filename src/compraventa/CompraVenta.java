@@ -186,10 +186,7 @@ public class CompraVenta {
         }
         for(int i=0;i<num.length();i++){
             if(num.charAt(i)=='0'||num.charAt(i)=='1'||num.charAt(i)=='2'||num.charAt(i)=='3'||num.charAt(i)=='4'||num.charAt(i)=='5'||num.charAt(i)=='6'||num.charAt(i)=='7'||num.charAt(i)=='8'||num.charAt(i)=='9'){   
-                if(num.charAt(i)=='0'){
-                    precio= (precio) + (0);
-                }
-                precio= (precio) + ((num.charAt(i)-'0'));
+                precio= (precio*10) + ((num.charAt(i)-'0'));
             }
             }
         return precio;
