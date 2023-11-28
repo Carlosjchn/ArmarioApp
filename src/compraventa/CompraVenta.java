@@ -198,7 +198,7 @@ public class CompraVenta {
         ropaCompra=restarPrenda(ropaCompra, prendaVender);
         return ropaCompra;
         }else{
-        saldo[0]=saldo[0] + precio;
+        System.out.println("No tienes suficiente saldo.");
         return ropaCompra;
         }
     }
@@ -309,6 +309,7 @@ public class CompraVenta {
                     break;
                 case "3", "Comprar", "comprar":
                     limpiarPantalla();
+                    //vuelvo a definir otra opcion como array para que se actualize en la funcion.
                     String opcion1[]={""};
                     String [][] ropaCompra=menuCompra(sc, usuarios, prendaVender, ropaJuan, ropaManuel, ropaAlberto, saldo,opcion1);
                     int precio = precio(ropaCompra, prendaVender);
@@ -323,7 +324,11 @@ public class CompraVenta {
                         ropaAlberto=comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
                         break;
                     }
+                    if (saldo[0]>=0){
                     ropaUser=sumarPrenda(ropaUser, prendaVender);
+                    }else{
+                        saldo[0]=saldo[0]+precio;
+                    }
                     break;
                 case "4", "Salir", "salir":
                     limpiarPantalla();
