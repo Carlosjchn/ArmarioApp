@@ -100,14 +100,21 @@ public class CompraVenta {
 
     // ============== FUNCIONES VENTA ===================
     public static String[] reconPrenda(String prendaVender[], String ropaUser[][], Scanner sc, int[] saldo) {
+        boolean num=false;
+        do{
+        limpiarPantalla();
         System.out.println("¿Que articulo quieres elegir?");
         verRopa(ropaUser, saldo);
+        if(sc.hasNextInt()){
+        num=true;
         int articulo = sc.nextInt();
         if (articulo <= ropaUser.length) {
             for (int i = 0; i < prendaVender.length; i++) {
                 prendaVender[i] = ropaUser[articulo - 1][i];
             }
         }
+        }
+        }while(num==false);
         return prendaVender;
     }
 
@@ -167,9 +174,7 @@ public class CompraVenta {
             }
         }
         for (int i = 0; i < num.length(); i++) {
-            if (num.charAt(i) == '0' || num.charAt(i) == '1' || num.charAt(i) == '2' || num.charAt(i) == '3'
-                    || num.charAt(i) == '4' || num.charAt(i) == '5' || num.charAt(i) == '6' || num.charAt(i) == '7'
-                    || num.charAt(i) == '8' || num.charAt(i) == '9') {
+            if (num.charAt(i) > '0' && num.charAt(i) < '9') {
                 precio = (precio * 10) + ((num.charAt(i) - '0'));
             }
         }
@@ -206,7 +211,8 @@ public class CompraVenta {
     }
     // ========================================
 
-    // ------------------------------------------------- PROGRAMA MAIN ------------------------------------------------------------
+    // ------------------------------------------------- PROGRAMA MAIN
+    // ------------------------------------------------------------
     public static void main(String[] args) {
         /*
          * Necesito que Login==true, RopaUser[][]
