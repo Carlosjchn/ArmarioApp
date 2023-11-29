@@ -347,6 +347,8 @@ public class CompraVenta {
                             ropaUser = sumarPrenda(ropaUser, prendaVender);
                         } else {
                             saldo[0] = saldo[0] + precio;
+                            System.out.println("No tienes saldo sufiente");
+                            sc.next();
                         }
                     }
                     break;
