@@ -100,23 +100,28 @@ public class CompraVenta {
 
     // ============== FUNCIONES VENTA ===================
     public static String[] reconPrenda(String prendaVender[], String ropaUser[][], Scanner sc, int[] saldo) {
-        boolean num=false;
-        do{
-        limpiarPantalla();
-        System.out.println("¿Que articulo quieres elegir?");
-        verRopa(ropaUser, saldo);
-        if(sc.hasNextInt()){
-        num=true;
-        int articulo = sc.nextInt();
-        if (articulo <= ropaUser.length) {
-            for (int i = 0; i < prendaVender.length; i++) {
-                prendaVender[i] = ropaUser[articulo - 1][i];
+        boolean num = false;
+        do {
+            limpiarPantalla();
+            System.out.println("¿Que articulo quieres elegir? \t" + (ropaUser.length + 1) + ". Salir");
+            verRopa(ropaUser, saldo);
+            if (sc.hasNextInt()) {
+                int articulo = sc.nextInt();
+                if (articulo == ropaUser.length + 1){
+                    num=true;
+                    return prendaVender;
+                }else{
+                if (articulo <= ropaUser.length) {
+                    for (int i = 0; i < prendaVender.length; i++) {
+                        prendaVender[i] = ropaUser[articulo - 1][i];
+                    }
+                    num = true;
+                }
+                }
+            } else {
+                sc.next();
             }
-        }
-        }else{
-            sc.next();
-        }
-        }while(num==false);
+        } while (num == false);
         return prendaVender;
     }
 
@@ -140,8 +145,9 @@ public class CompraVenta {
             limpiarPantalla();
             System.out.println("Elige un usuario para ver su Armario:\n");
             for (int i = 0; i < usuarios.length; i++) {
-                System.err.print("\t " + (i + 1) + ". " + usuarios[i]);
+                System.out.print("\t " + (i + 1) + ". " + usuarios[i]);
             }
+            System.out.print("\t 4. Salir \n");
             opcion[0] = sc.next();
             switch (opcion[0]) {
                 case "1", "Juan", "juan":
@@ -159,6 +165,9 @@ public class CompraVenta {
                     limpiarPantalla();
                     reconPrenda(prendaVender, ropaAlberto, sc, saldo);
                     return ropaAlberto;
+                case "4", "salir", "Salir":
+                    done = true;
+                    break;
                 default:
                     System.out.println("Elige una opcion.");
                     sc.next();
@@ -269,7 +278,7 @@ public class CompraVenta {
                     break;
                 case "2", "Vender", "vender":
                     limpiarPantalla();
-                    System.out.println("MENÚ VENTAS: \n\t 1 - Vender ropa \n\t 2 - Ropa en venta.");
+                    System.out.println("MENÚ VENTAS: \n\t 1 - Vender ropa \n\t 2 - Ropa en venta. \n\t 3 - Salir.");
                     opcion = sc.nextLine();
                     switch (opcion) {
                         case "1", "vender", "Vender":
@@ -277,6 +286,7 @@ public class CompraVenta {
                             while (vender == false) {
                                 limpiarPantalla();
                                 reconPrenda(prendaVender, ropaUser, sc, saldo);
+                                if(prendaVender[0]!=null){
                                 ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
                                 ropaUser = restarPrenda(ropaUser, prendaVender);
                                 System.out.println("¿Quieres seguir vendiendo? (Si/No)");
@@ -286,9 +296,12 @@ public class CompraVenta {
                                 } else {
                                     vender = true;
                                 }
+                            }else{
+                                vender=true;
+                            }
                             }
                             break;
-                        case "2":
+                        case "2", "ropa en venta", "Ropa en venta":
                             limpiarPantalla();
                             verRopa(ropaVenta, saldo);
                             System.out.println("\n¿Quieres retirar alguna prenda? (Si/No)");
@@ -299,6 +312,8 @@ public class CompraVenta {
                                 ropaVenta = restarPrenda(ropaVenta, prendaVender);
                                 ropaUser = sumarPrenda(ropaUser, prendaVender);
                             }
+                            break;
+                        case "3", "salir":
                             break;
                     }
                     break;
@@ -320,7 +335,7 @@ public class CompraVenta {
                             ropaAlberto = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
                             break;
                     }
-                    if (saldo[0] >= 0) {
+                    if (saldo[0] >= 0 && opcion1[0].equals("1") && opcion1[0].equals("2") && opcion1[0].equals("3")) {
                         ropaUser = sumarPrenda(ropaUser, prendaVender);
                     } else {
                         saldo[0] = saldo[0] + precio;
