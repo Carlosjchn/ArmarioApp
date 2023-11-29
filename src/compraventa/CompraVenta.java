@@ -50,14 +50,17 @@ public class CompraVenta {
             String dinamico[][] = new String[array.length - 1][array[0].length];
             boolean coincide = false;
             for (int i = 0; i < array.length; i++) {
+                if (dato[0] == array[i][0] && dato[1] == array[i][1] && dato[2] == array[i][2]) {
+                    coincide = true;
+                    i++;
+                }
                 for (int j = 0; j < array[0].length; j++) {
-                    if (dato[0] == array[i][j]) {
-                        coincide = true;
-                    }
-                    if (coincide == true && i != 0) {
-                        dinamico[i - 1][j] = array[i][j];
-                    } else {
-                        dinamico[i][j] = array[i][j];
+                    if (i != array.length) {
+                        if (coincide == true && i != 0) {
+                            dinamico[i - 1][j] = array[i][j];
+                        } else {
+                            dinamico[i][j] = array[i][j];
+                        }
                     }
                 }
             }
@@ -107,16 +110,19 @@ public class CompraVenta {
             verRopa(ropaUser, saldo);
             if (sc.hasNextInt()) {
                 int articulo = sc.nextInt();
-                if (articulo == ropaUser.length + 1){
-                    num=true;
-                    return prendaVender;
-                }else{
-                if (articulo <= ropaUser.length) {
-                    for (int i = 0; i < prendaVender.length; i++) {
-                        prendaVender[i] = ropaUser[articulo - 1][i];
-                    }
+                if (articulo == ropaUser.length + 1) {
                     num = true;
-                }
+                    for (int i = 0; i < prendaVender.length; i++) {
+                        prendaVender[i] = null;
+                    }
+                    return prendaVender;
+                } else {
+                    if (articulo <= ropaUser.length) {
+                        for (int i = 0; i < prendaVender.length; i++) {
+                            prendaVender[i] = ropaUser[articulo - 1][i];
+                        }
+                        num = true;
+                    }
                 }
             } else {
                 sc.next();
@@ -274,6 +280,7 @@ public class CompraVenta {
                 case "1", "Armario", "armario":
                     limpiarPantalla();
                     verRopa(ropaUser, saldo);
+                    System.out.println("\nPresiona Intro para continuar.");
                     sc.nextLine();
                     break;
                 case "2", "Vender", "vender":
@@ -286,19 +293,19 @@ public class CompraVenta {
                             while (vender == false) {
                                 limpiarPantalla();
                                 reconPrenda(prendaVender, ropaUser, sc, saldo);
-                                if(prendaVender[0]!=null){
-                                ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
-                                ropaUser = restarPrenda(ropaUser, prendaVender);
-                                System.out.println("¿Quieres seguir vendiendo? (Si/No)");
-                                opcion = sc.next();
-                                if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
-                                    vender = false;
+                                if (prendaVender[0] != null) {
+                                    ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
+                                    ropaUser = restarPrenda(ropaUser, prendaVender);
+                                    System.out.println("¿Quieres seguir vendiendo? (Si/No)");
+                                    opcion = sc.next();
+                                    if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
+                                        vender = false;
+                                    } else {
+                                        vender = true;
+                                    }
                                 } else {
                                     vender = true;
                                 }
-                            }else{
-                                vender=true;
-                            }
                             }
                             break;
                         case "2", "ropa en venta", "Ropa en venta":
@@ -324,21 +331,23 @@ public class CompraVenta {
                     String[][] ropaCompra = menuCompra(sc, usuarios, prendaVender, ropaJuan, ropaManuel, ropaAlberto,
                             saldo, opcion1);
                     int precio = precio(ropaCompra, prendaVender);
-                    switch (opcion1[0]) {
-                        case "1", "Juan", "juan":
-                            ropaJuan = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
-                            break;
-                        case "2", "Manuel", "manuel":
-                            ropaManuel = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
-                            break;
-                        case "3", "Alberto", "alberto":
-                            ropaAlberto = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
-                            break;
-                    }
-                    if (saldo[0] >= 0 && opcion1[0].equals("1") && opcion1[0].equals("2") && opcion1[0].equals("3")) {
-                        ropaUser = sumarPrenda(ropaUser, prendaVender);
-                    } else {
-                        saldo[0] = saldo[0] + precio;
+                    if (precio != 0) {
+                        switch (opcion1[0]) {
+                            case "1", "Juan", "juan":
+                                ropaJuan = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                                break;
+                            case "2", "Manuel", "manuel":
+                                ropaManuel = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                                break;
+                            case "3", "Alberto", "alberto":
+                                ropaAlberto = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                                break;
+                        }
+                        if (saldo[0] >= 0 || opcion1[0] == "1" || opcion1[0] == "2" || opcion1[0] == "3") {
+                            ropaUser = sumarPrenda(ropaUser, prendaVender);
+                        } else {
+                            saldo[0] = saldo[0] + precio;
+                        }
                     }
                     break;
                 case "4", "Salir", "salir":
