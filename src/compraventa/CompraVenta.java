@@ -186,7 +186,8 @@ public class CompraVenta {
         int precio = 0;
         String num = "";
         for (int i = 0; i < ropaCompra.length; i++) {
-            if (prendaVender[0] == ropaCompra[i][0]) {
+            if (prendaVender[0] == ropaCompra[i][0] && prendaVender[1] == ropaCompra[i][1]
+                    && prendaVender[2] == ropaCompra[i][2]) {
                 num = ropaCompra[i][3];
             }
         }
