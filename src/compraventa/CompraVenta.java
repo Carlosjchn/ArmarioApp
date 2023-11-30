@@ -134,6 +134,7 @@ public class CompraVenta {
     public static String[][] venderRopa(Scanner sc, String ropaUser[][], String ventaUser[][], String prendaVender[]) {
         System.out.println("¿Que precio quieres ponerle a tu " + prendaVender[0] + " "
                 + prendaVender[1] + "?");
+        
         String precio = sc.next();
         ventaUser = sumarPrenda(ventaUser, prendaVender);
         ventaUser[ventaUser.length - 1][ventaUser[0].length - 1] = precio;
@@ -271,7 +272,7 @@ public class CompraVenta {
                 { "Sudadera", "Azul", "XL", suda(r) + "" } };
 
         String ropaVenta[][] = new String[1][4];
-        String prendaVender[] = new String[3];
+        String prendaElegida[] = new String[3];
         boolean salir = false;
         String opcion;
 
@@ -293,10 +294,10 @@ public class CompraVenta {
                             boolean vender = false;
                             while (vender == false) {
                                 limpiarPantalla();
-                                reconPrenda(prendaVender, ropaUser, sc, saldo);
-                                if (prendaVender[0] != null) {
-                                    ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaVender);
-                                    ropaUser = restarPrenda(ropaUser, prendaVender);
+                                reconPrenda(prendaElegida, ropaUser, sc, saldo);
+                                if (prendaElegida[0] != null) {
+                                    ropaVenta = venderRopa(sc, ropaUser, ropaVenta, prendaElegida);
+                                    ropaUser = restarPrenda(ropaUser, prendaElegida);
                                     System.out.println("¿Quieres seguir vendiendo? (Si/No)");
                                     opcion = sc.next();
                                     if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
@@ -316,9 +317,9 @@ public class CompraVenta {
                             opcion = sc.next();
                             if (opcion.equals("si") || opcion.equals("Si") || opcion.equals("SI")) {
                                 limpiarPantalla();
-                                reconPrenda(prendaVender, ropaVenta, sc, saldo);
-                                ropaVenta = restarPrenda(ropaVenta, prendaVender);
-                                ropaUser = sumarPrenda(ropaUser, prendaVender);
+                                reconPrenda(prendaElegida, ropaVenta, sc, saldo);
+                                ropaVenta = restarPrenda(ropaVenta, prendaElegida);
+                                ropaUser = sumarPrenda(ropaUser, prendaElegida);
                             }
                             break;
                         case "3", "salir":
@@ -329,23 +330,23 @@ public class CompraVenta {
                     limpiarPantalla();
                     // vuelvo a definir otra opcion como array para que se actualize en la funcion.
                     String opcion1[] = { "" };
-                    String[][] ropaCompra = menuCompra(sc, usuarios, prendaVender, ropaJuan, ropaManuel, ropaAlberto,
+                    String[][] ropaCompra = menuCompra(sc, usuarios, prendaElegida, ropaJuan, ropaManuel, ropaAlberto,
                             saldo, opcion1);
-                    int precio = precio(ropaCompra, prendaVender);
+                    int precio = precio(ropaCompra, prendaElegida);
                     if (precio != 0) {
                         switch (opcion1[0]) {
                             case "1", "Juan", "juan":
-                                ropaJuan = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                                ropaJuan = comprar(prendaElegida, ropaUser, ropaCompra, saldo, precio);
                                 break;
                             case "2", "Manuel", "manuel":
-                                ropaManuel = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                                ropaManuel = comprar(prendaElegida, ropaUser, ropaCompra, saldo, precio);
                                 break;
                             case "3", "Alberto", "alberto":
-                                ropaAlberto = comprar(prendaVender, ropaUser, ropaCompra, saldo, precio);
+                                ropaAlberto = comprar(prendaElegida, ropaUser, ropaCompra, saldo, precio);
                                 break;
                         }
                         if (saldo[0] >= 0 || opcion1[0] == "1" || opcion1[0] == "2" || opcion1[0] == "3") {
-                            ropaUser = sumarPrenda(ropaUser, prendaVender);
+                            ropaUser = sumarPrenda(ropaUser, prendaElegida);
                         } else {
                             saldo[0] = saldo[0] + precio;
                             System.out.println("No tienes saldo sufiente");
