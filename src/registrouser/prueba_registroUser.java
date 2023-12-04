@@ -1,7 +1,9 @@
 package registrouser;
 import java.util.Scanner;
 public class prueba_registroUser {
+	
 	// Creo la función para la "base de datos"
+	
 	public static String[][] registroUsuarios(String[][] array, String dato[]) {
         // este if es para cuando la matriz esta vacía se copien los datos en la posiciones iniciales vacias.
 		if (array[0][0] == null) {
@@ -11,7 +13,7 @@ public class prueba_registroUser {
             return array;
         } else {
 			//creo un matriz igual que la introducida con 1 FILA mas.
-            String dinamico[][] = new String[array.length + 1][array[0].length];
+            String dinamico[][] = new String [array.length + 1][array[0].length];
             // copio los datos de la matriz inicial en la nueva matriz, dejando la ultima fila vacía.
 			for (int i = 0; i < array.length; i++) {
                 for (int j = 0; j < array[0].length; j++) {
@@ -37,7 +39,6 @@ public class prueba_registroUser {
     			System.out.println (matriz [i] [j] = sc.nextLine());
     		}
     	}
-
 
 		//Te hago un ejemplo de como lo puedes hacer Josca.
 		// creo una matriz 1 filas 3 columnas, 3 son el nº de datos que le pides al usuario. nombre, correo y contraseña. Esta matriz es tu "base de datos"
