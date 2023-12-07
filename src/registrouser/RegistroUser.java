@@ -11,56 +11,81 @@ public class RegistroUser {
     	int opcion = sc.nextInt();
    
     	if (opcion==1) {
-    		obtenerDatoString ("Introduzca nombre de Usuario: ", sc);
-    		obtenerDatoString ("Introduzca Contraseña: ", sc);
+    		    		   		
+    		 String matriz [] [] = new String [2] [2];
+             for (int i=0; i<matriz.length; i++){
+             
+                 System.out.println("Introduzca nombre de Usuario: ");
+                 String nombre = sc.nextLine();
+                 System.out.println("Introduzca Contraseña: ");
+                 String edad = sc.nextLine();
+           
+                 matriz [i] [0] = nombre;
+                 matriz [i] [1] = edad;
+                 
+                 if (matriz [i][0]==matriz [i][1]){
+                     System.out.println("enhorabuena has iniciado sesion");
+                 }
+
+             }
+    		
+    		
     	} 
     	
     	if (opcion==2) {
-    		obtenerDatoString ("Te damos la bienvenida al proceso de creacion de cuenta de tu ArmarioApp, rellene los siguientes datos para su alta: \n" +
-    					       "Nombre: ", sc);
-    		obtenerDatoString ("Contraseña", sc);
-    		obtenerDatoString ("Correo electrónico: ", sc);
-    		obtenerDatoint    ("Fecha de Nacimiento: ", sc);
-    		obtenerDatoString ("Sexo: ", sc);
     		
+    		String almacenarDatos [] = new String [3];
     		
+    		System.out.println("Pon un nombre: ");
+    		String datoNombre = sc.next();
+    		almacenarDatos [0] = datoNombre;
+
+    		System.out.println("Pon una contraseña: ");
+    		String datoContraseña = sc.next();
+    		almacenarDatos [1] = datoContraseña;
+
+    		System.out.println("Pon un correo: ");
+    		String datoCorreo = sc.next();
+    		almacenarDatos [2] = datoCorreo;
+
+    		String  crearUsuario[] = almacenarDatos;
+    	
+    		
+    		for (int i = 0; i< crearUsuario.length; i++)
+    			System.out.println(crearUsuario[i]);
        	}
 	
 	}
        
-    public static String obtenerDatoString(String texto, Scanner sc) {
+	public static String [] rellenarDatos (Scanner sc) {
+
+        String datos [] = new String [3];
+      
+        System.out.println("Introduzca su nombre: ");
+            String nombre = sc.next();
+            datos [0] = nombre;
+        
+        System.out.println("Introduzca su contraseña: ");
+            String contraseña = sc.next();
+            datos [1] = contraseña;
+    
+        System.out.println("Introduzca su correo electrónico: ");
+            String correo = sc.next();
+            datos [2] = correo;
+        return datos;
+		}
+	
+	
+	public static String obtenerDatoString(String texto, Scanner sc) {
     	System.out.println(texto);
     	String dato = sc.next();
     	return dato;
     }
-    
-    public static int obtenerDatoint (String texto, Scanner sc) {
-    	System.out.println(texto);
-    	int dato = sc.nextInt();
-    	return dato;
-    }
-    
+      
    /* public static String [][] guardarDatos (int campos, int datos, Scanner sc1) {
     	Scanner sc1 = new Scanner (System.in);
      	String nombre = sc1.nextLine();
     	String matriz [][] = new String [campos] [datos];
-    	for (int i = 0; i<campos; i++) {
-    		
-    */
-    	 
-		
+    	for (int i = 0; i<campos; i++) {	
+    */ 	
 	}
-    
-    
-    /* 
-     * el menu 2. se convertira en el primer paso prioritario
-     * cuando haga el scanner de todos los datos, guardo los mismos datos en una matriz 
-     * 
-     * String matriz de 5x2; es decir String datos [5] [2];
-     * 
-     * Usuario Jose Carlos
-     * Contraseña petete
-     * Correo Electronico  josecarlosmartinez@outlook.com
-     * Fecha de nacimiento 29/09/98
-     * Sexo  Masculino
-     */
