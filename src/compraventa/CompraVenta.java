@@ -19,52 +19,60 @@ public class CompraVenta {
 
     // ================= FUNCION +1 FILA ARRAY ====================
     public static String[][] sumarPrenda(String[][] array, String dato[]) {
-        if (array[0][0] == null) {
-            for (int k = 0; k < dato.length; k++) {
-                array[0][k] = dato[k];
-            }
+        if (dato[0] == null) {
             return array;
         } else {
-            String dinamico[][] = new String[array.length + 1][array[0].length];
-            for (int i = 0; i < array.length; i++) {
-                for (int j = 0; j < array[0].length; j++) {
-                    dinamico[i][j] = array[i][j];
+            if (array[0][0] == null) {
+                for (int k = 0; k < dato.length; k++) {
+                    array[0][k] = dato[k];
                 }
+                return array;
+            } else {
+                String dinamico[][] = new String[array.length + 1][array[0].length];
+                for (int i = 0; i < array.length; i++) {
+                    for (int j = 0; j < array[0].length; j++) {
+                        dinamico[i][j] = array[i][j];
+                    }
+                }
+                for (int k = 0; k < dato.length; k++) {
+                    dinamico[dinamico.length - 1][k] = dato[k];
+                }
+                return dinamico;
             }
-            for (int k = 0; k < dato.length; k++) {
-                dinamico[dinamico.length - 1][k] = dato[k];
-            }
-            return dinamico;
         }
     }
     // ===============================================================
 
     // =================== FUNCION -1 FILA ARRAY ============================
     public static String[][] restarPrenda(String[][] array, String dato[]) {
-        if (array.length == 1) {
-            for (int i = 0; i < dato.length; i++) {
-                array[0][i] = null;
-            }
+        if (dato[0] == null) {
             return array;
         } else {
-            String dinamico[][] = new String[array.length - 1][array[0].length];
-            boolean coincide = false;
-            for (int i = 0; i < array.length; i++) {
-                if (dato[0] == array[i][0] && dato[1] == array[i][1] && dato[2] == array[i][2]) {
-                    coincide = true;
-                    i++;
+            if (array.length == 1) {
+                for (int i = 0; i < dato.length; i++) {
+                    array[0][i] = null;
                 }
-                for (int j = 0; j < array[0].length; j++) {
-                    if (i != array.length) {
-                        if (coincide == true && i != 0) {
-                            dinamico[i - 1][j] = array[i][j];
-                        } else {
-                            dinamico[i][j] = array[i][j];
+                return array;
+            } else {
+                String dinamico[][] = new String[array.length - 1][array[0].length];
+                boolean coincide = false;
+                for (int i = 0; i < array.length; i++) {
+                    if (dato[0] == array[i][0] && dato[1] == array[i][1] && dato[2] == array[i][2]) {
+                        coincide = true;
+                        i++;
+                    }
+                    for (int j = 0; j < array[0].length; j++) {
+                        if (i != array.length) {
+                            if (coincide == true && i != 0) {
+                                dinamico[i - 1][j] = array[i][j];
+                            } else {
+                                dinamico[i][j] = array[i][j];
+                            }
                         }
                     }
                 }
+                return dinamico;
             }
-            return dinamico;
         }
     }
     // ======================================================================
@@ -134,7 +142,7 @@ public class CompraVenta {
     public static String[][] venderRopa(Scanner sc, String ropaUser[][], String ventaUser[][], String prendaVender[]) {
         System.out.println("¿Que precio quieres ponerle a tu " + prendaVender[0] + " "
                 + prendaVender[1] + "?");
-        
+
         String precio = sc.next();
         ventaUser = sumarPrenda(ventaUser, prendaVender);
         ventaUser[ventaUser.length - 1][ventaUser[0].length - 1] = precio;
@@ -200,14 +208,18 @@ public class CompraVenta {
         return precio;
     }
 
-    public static String[][] comprar(String prendaVender[], String ropaUser[][], String ropaCompra[][], int saldo[],
+    public static String[][] comprar(String prendaComprar[], String ropaUser[][], String ropaCompra[][], int saldo[],
             int precio) {
-        saldo[0] = saldo[0] - precio;
-        if (saldo[0] >= 0) {
-            ropaCompra = restarPrenda(ropaCompra, prendaVender);
-            return ropaCompra;
+        if (prendaComprar[0] != null) {
+            saldo[0] = saldo[0] - precio;
+            if (saldo[0] >= 0) {
+                ropaCompra = restarPrenda(ropaCompra, prendaComprar);
+                return ropaCompra;
+            } else {
+                System.out.println("No tienes suficiente saldo.");
+                return ropaCompra;
+            }
         } else {
-            System.out.println("No tienes suficiente saldo.");
             return ropaCompra;
         }
     }
