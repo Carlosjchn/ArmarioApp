@@ -1,6 +1,6 @@
 package registrouser;
 import java.util.Scanner;
-public class prueba_registroUser {
+public class Prueba_chamo {
 	
 	public static void main(String[] args) {
 	   	Scanner sc = new Scanner (System.in);

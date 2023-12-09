@@ -1,6 +1,6 @@
 package registrouser;
 import java.util.Scanner;
-public class Reset {
+public class Prueba_josca_InicioSesion {
 
 	public static void main(String[] args) {
 

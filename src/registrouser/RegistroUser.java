@@ -22,20 +22,6 @@ public class RegistroUser {
 	}
     		
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	/*boolean ok = true;
     	do {
     		System.out.println("Introduzca nombre de Usuario: ");
