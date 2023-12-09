@@ -5,44 +5,66 @@ public class RegistroUser {
 		Scanner sc = new Scanner (System.in);
     	System.out.println("Bienvenido a tu ArmarioApp, registre sus datos e inicie sesión: \n" +
     					   " Crear cuenta: ");
-    	    	
-    		
-    	System.out.println("\n \n" +
-    					   "Inicio de sesion: ");
+    	     
     	
-    	String registrados [][]= new String [1][4];
-    	String usuario [] = new String [3];
+    	String usuariosRegistrados [][]= new String [1][4];
+    	String datos [] = new String [4];
+    	
     	
     	int a = 0;
     	while (a<1) {
-    		registrados = almacenarDatos (registrados, usuario, sc);	
-    	
+    		
+    		almacenarDatos (usuariosRegistrados, datos, sc);
+    		
+    		System.out.println("\n Desea resgistrar mas usuarios: S/N ");
+    		char opcion = sc.next().charAt(0);
+    		switch (opcion) {
+    			case 'S', 's': 
+    				break;
+    			case 'N', 'n':
+    				a=1;
+    				break;
+    			default:
+    				System.out.println("Error, no has seleccionado una opción valida.");
+    			
+    		}
     	}
     	
-	}
-    		
-    	
-    	/*boolean ok = true;
-    	do {
-    		System.out.println("Introduzca nombre de Usuario: ");
-    		String introduceUsuario = sc.next();
-    		if (introduceUsuario.equals(datos[0])) {
-    			System.out.println("Introduzca contraseña: ");
-    			String introduceContraseña = sc.next();
-    			if (introduceContraseña.equals(datos[2])) {
-    				System.out.println("Has iniciado correctamente sesion.");
-    				ok=false;
-    			} else {
-    				System.out.println("Contraseña incorrecta, intentelo de nuevo: ");
-    				
-    			}
-    		}else {
-    			System.out.println("Error, introduzca de nuevo su nombre de Usuario: ");
-    		}
-    	}while (ok==true);
-    		
-	} */
 
+    	
+    	System.out.println("Iniciemos sesion: ");
+    	boolean ok = true;
+    	do {
+    
+    		System.out.println("Introduzca nombre de Usuario ya creado: ");
+    		
+    		String introduceUsuario = sc.next();
+    		
+    		for (int i = 0; i<usuariosRegistrados.length; i++) {
+    			if (introduceUsuario.equals(usuariosRegistrados [i][0])) {
+    				System.out.println("Introduzca contraseña: ");
+    				String introduceContraseña = sc.next();
+    				
+    				if (introduceContraseña.equals(usuariosRegistrados [i][2])) {
+    					System.out.println("Has iniciado correctamente sesion.");
+    					ok=false;
+    				
+    				} else {
+    					System.out.println("Contraseña incorrecta, intentelo de nuevo: ");
+    				
+    				}
+    				
+    			}else {
+    				System.out.println("Error, introduzca de nuevo su nombre de Usuario: ");
+    			}
+    		}
+    	} while (ok==true);
+    	
+    	}
+
+	
+	
+	
 	public static String[] rellenarDatos (Scanner sc) {
 	String datos [] = new String [4];
     				   		        
@@ -61,41 +83,48 @@ public class RegistroUser {
                 System.out.println(" Introduzca su correo electrónico: ");
                 	String correo = sc.next();
                 	datos [3] = correo;
+                System.out.println("    ");
               
                 return datos;
     }
     		
-
-
+	
+	
+	
+	
 	public static String[][] almacenarDatos (String[][] usuarioRegistrado, String datos[], Scanner sc) {
 		datos = rellenarDatos(sc);
 		
 		if (usuarioRegistrado[0][0] == null) {
-            for (int k = 0; k < datos.length; k++) {
-            	 System.out.print( usuarioRegistrado[0][k] = datos[k] + " ");
+            System.out.print("Primer usuario:   ");
+			for (int k = 0; k < datos.length; k++) {
+            	 System.out.print( usuarioRegistrado[0][k] = datos[k] + "   ");
             }
            
             return usuarioRegistrado;
-            
         
 		} else {
 			String usuarioNuevo[][] = new String [usuarioRegistrado.length + 1] [usuarioRegistrado[0].length];
 			
+			System.out.print("Primer usuario:   ");
 			for (int i = 0; i < usuarioRegistrado.length; i++) {
                 for (int j = 0; j < usuarioRegistrado[0].length; j++) {
-                   System.out.print(usuarioNuevo[i][j] = usuarioRegistrado [i] [j] + " ");
+                   System.out.print(usuarioNuevo[i][j] = usuarioRegistrado [i] [j] + "   ");
                 }
             }
-            for (int k = 0 ; k < usuarioNuevo[0].length ; k++) {
-                System.out.print(usuarioNuevo [usuarioNuevo.length - 1] [k] = datos[k] + " ");
+            System.out.print("\nSegundo usuario:   ");
+			for (int k = 0 ; k < usuarioNuevo[0].length ; k++) {
+                System.out.print( usuarioNuevo [usuarioNuevo.length - 1] [k] = datos[k] + "   ");
             }
             return usuarioNuevo;
         }
-    }
-}
-	
-	
-	
-    
+	}
 
-       
+
+
+
+
+
+}
+
+   
