@@ -41,7 +41,7 @@ public class prueba_registroUser {
 	}
 	
 	// Creo la función para la "base de datos"
-	public static String[][] registroUsuarios(String[][] array, String dato[]) {
+	public static String[][] registroUsuarios (String[][] array, String dato[]) {
         // este if es para cuando la matriz esta vacía se copien los datos en la posiciones iniciales vacias.
 		if (array[0][0] == null) {
             for (int k = 0; k < dato.length; k++) {
