@@ -11,27 +11,31 @@ public class RegistroUser {
     	String datos [] = new String [4];
     	
     	
+    	
     	int a = 0;
-    	while (a<1) {
+    	while (a<1) {		
     		
-    		almacenarDatos (usuariosRegistrados, datos, sc);
+    		usuariosRegistrados = almacenarDatos (usuariosRegistrados, datos, sc);
     		
-    		System.out.println("\n Desea resgistrar mas usuarios: S/N ");
-    		char opcion = sc.next().charAt(0);
-    		switch (opcion) {
-    			case 'S', 's': 
-    				break;
-    			case 'N', 'n':
-    				a=1;
-    				break;
-    			default:
-    				System.out.println("Error, no has seleccionado una opción valida.");
-    			
+    		int b=1;
+    		while (b==1) {
+    			System.out.println("\n Desea resgistrar mas usuarios: S/N ");
+    		
+    			char opcion = sc.next().charAt(0);
+    			switch (opcion) {
+    				case 'S', 's':
+    					b=2;
+    					break;
+    				case 'N', 'n':
+    					a = 2;
+    					b=3;
+    					break;
+    				default:
+    					System.out.println("Error, no has seleccionado una opción valida.");
+    			}
     		}
     	}
-    	
-
-    	
+    	    	
     	System.out.println("Iniciemos sesion: ");
     	boolean ok = true;
     	do {
@@ -41,7 +45,7 @@ public class RegistroUser {
     		String introduceUsuario = sc.next();
     		
     		for (int i = 0; i<usuariosRegistrados.length; i++) {
-    			if (introduceUsuario.equals(usuariosRegistrados [i][0])) {
+    			if (introduceUsuario.equals(datos [0])) {
     				System.out.println("Introduzca contraseña: ");
     				String introduceContraseña = sc.next();
     				
@@ -51,7 +55,6 @@ public class RegistroUser {
     				
     				} else {
     					System.out.println("Contraseña incorrecta, intentelo de nuevo: ");
-    				
     				}
     				
     			}else {
@@ -106,13 +109,17 @@ public class RegistroUser {
 		} else {
 			String usuarioNuevo[][] = new String [usuarioRegistrado.length + 1] [usuarioRegistrado[0].length];
 			
-			System.out.print("Primer usuario:   ");
+						
 			for (int i = 0; i < usuarioRegistrado.length; i++) {
-                for (int j = 0; j < usuarioRegistrado[0].length; j++) {
-                   System.out.print(usuarioNuevo[i][j] = usuarioRegistrado [i] [j] + "   ");
-                }
-            }
-            System.out.print("\nSegundo usuario:   ");
+                System.out.print("Usuario numero " + (i+1) + "   ");
+				for (int j = 0; j < usuarioRegistrado[0].length; j++) {
+                   
+                	System.out.print(usuarioNuevo[i][j] = usuarioRegistrado [i] [j]);
+                	
+               }
+				System.out.println("   ");
+			}
+            System.out.print("\nNuevo usuario:   ");
 			for (int k = 0 ; k < usuarioNuevo[0].length ; k++) {
                 System.out.print( usuarioNuevo [usuarioNuevo.length - 1] [k] = datos[k] + "   ");
             }
