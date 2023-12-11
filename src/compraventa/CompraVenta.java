@@ -140,14 +140,22 @@ public class CompraVenta {
     }
 
     public static String[][] venderRopa(Scanner sc, String ropaUser[][], String ventaUser[][], String prendaVender[]) {
+        boolean num = false;
+        do{
         System.out.println("¿Que precio quieres ponerle a tu " + prendaVender[0] + " "
                 + prendaVender[1] + "?");
-
-        String precio = sc.next();
+        if (sc.hasNextInt()){
+        int valor = sc.nextInt();
+        String precio = valor + "";
         ventaUser = sumarPrenda(ventaUser, prendaVender);
         ventaUser[ventaUser.length - 1][ventaUser[0].length - 1] = precio;
-        return ventaUser;
-    }
+        num = true;
+        }else{
+            sc.next();
+        }
+    }while(num == false);
+    return ventaUser;
+}
 
     // ====================================================
 
@@ -242,8 +250,7 @@ public class CompraVenta {
     }
     // ========================================
 
-    // ------------------------------------------------- PROGRAMA MAIN
-    // ------------------------------------------------------------
+    // ---------------- PROGRAMA MAIN ----------------
     public static void main(String[] args) {
         /*
          * Necesito que Login==true, RopaUser[][]
