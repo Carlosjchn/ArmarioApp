@@ -199,12 +199,12 @@ public class CompraVenta {
         return ropaJuan;
     }
 
-    public static int precio(String ropaCompra[][], String prendaVender[]) {
+    public static int precio(String ropaCompra[][], String prendaComprar[]) {
         int precio = 0;
         String num = "";
         for (int i = 0; i < ropaCompra.length; i++) {
-            if (prendaVender[0] == ropaCompra[i][0] && prendaVender[1] == ropaCompra[i][1]
-                    && prendaVender[2] == ropaCompra[i][2]) {
+            if (prendaComprar[0] == ropaCompra[i][0] && prendaComprar[1] == ropaCompra[i][1]
+                    && prendaComprar[2] == ropaCompra[i][2]) {
                 num = ropaCompra[i][3];
             }
         }
@@ -258,9 +258,7 @@ public class CompraVenta {
          * Funcion para poner RopaUser a la venta con precio. HECHO
          * Funcion para ver RopaUser a la venta. HECHO
          * Funcion para ver ropa que puedes comprar. HECHO
-         * Funcion para comprar y que se añada a RopaUser.
-         * Funcion para mensajes con vendedor/comprador.
-         * Funcion para favoritos/carrito compra.
+         * Funcion para comprar y que se añada a RopaUser. HECHO
          */
         Random r = new Random();
         // defino el saldo como un array para poder actualizarlo en las funcione usando
